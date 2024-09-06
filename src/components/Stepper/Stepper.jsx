@@ -6,7 +6,7 @@ import CompanyDetailsForm from "../Company/Companydetails";
 import SummaryPage from "../Info/SummaryPage";
 
 const Stepper = () => {
-  const steps = ["Step 1", "Step 2", "Step 3"];
+  const steps = ["Personal Details", "Company Details", "Summary"];
   const [activeStep, setActiveStep] = useState(0);
   const [personalDetails, setPersonalDetails] = useState({});
   const [companyDetails, setCompanyDetails] = useState({});
@@ -50,7 +50,7 @@ const Stepper = () => {
     <>
   <div className="flex flex-col justify-center items-center bg-[#282D2D] min-h-screen ">
   {/* Stepper */}
-  <div className="flex space-x-4 mt-24 -mb-12">
+  <div className="flex space-x-4 mt-16 -mb-12">
     {steps.map((step, i) => (
       <div
         key={i}
@@ -61,7 +61,7 @@ const Stepper = () => {
         <div className="step">
           {i < activeStep ? <TiTick size={24} /> : i + 1}
         </div>
-        <p className="text-gray-100">{step}</p>
+        <p className="text-gray-100 font-extrabold">{step}</p>
       </div>
     ))}
   </div>

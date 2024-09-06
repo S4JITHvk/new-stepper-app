@@ -37,7 +37,7 @@ const FormRegistration = ({ onSubmit }) => {
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-        <h1 className="text-center text-lg font-semibold text-white">
+        <h1 className="text-center text-lg font-extrabold text-white">
           PERSONAL DETAILS
         </h1>
 
