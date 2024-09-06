@@ -50,7 +50,7 @@ const Stepper = () => {
     <>
   <div className="flex flex-col justify-center items-center bg-[#282D2D] min-h-screen ">
   {/* Stepper */}
-  <div className="flex space-x-6 mt-6">
+  <div className="flex space-x-4 mt-6">
     {steps.map((step, i) => (
       <div
         key={i}
