@@ -6,7 +6,7 @@ import CompanyDetailsForm from "../Company/Companydetails";
 import SummaryPage from "../Info/SummaryPage";
 
 const Stepper = () => {
-  const steps = ["PERSONAL DETAILS", "COMPANY DETAILS", "SUMMARY"];
+  const steps = ["Step 1", "Step 2", "Step 3"];
   const [activeStep, setActiveStep] = useState(0);
   const [personalDetails, setPersonalDetails] = useState({});
   const [companyDetails, setCompanyDetails] = useState({});
