@@ -11,8 +11,6 @@ const FormRegistration = ({ onSubmit }) => {
       phone: "",
       gender: "",
       address: "",
-      city: "",
-      state: "",
       dob: "",
     },
     validationSchema: Yup.object({
@@ -26,9 +24,7 @@ const FormRegistration = ({ onSubmit }) => {
         .required("Phone number is required"),
       gender: Yup.string().required("Gender is required"),
       address: Yup.string().required("Address is required"),
-      city: Yup.string().required("City is required"),
-      state: Yup.string().required("State is required"),
-      dob: Yup.date().required("Date of birth is required").nullable(), 
+      dob: Yup.date().required("Date of birth is required").nullable(),
     }),
     onSubmit: (values) => {
       onSubmit(values);
@@ -51,10 +47,10 @@ const FormRegistration = ({ onSubmit }) => {
             <div className="flex flex-col sm:flex-row gap-2">
               <div className="w-full">
                 <input
-                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                     formik.touched.firstName && formik.errors.firstName
                       ? "border-red-500"
-                      : "bg-[#302E30] text-white border-transparent focus:border-white"
+                      : "border-transparent focus:border-black"
                   }`}
                   type="text"
                   name="firstName"
@@ -72,10 +68,10 @@ const FormRegistration = ({ onSubmit }) => {
 
               <div className="w-full">
                 <input
-                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                     formik.touched.lastName && formik.errors.lastName
                       ? "border-red-500"
-                      : "bg-[#302E30] text-white border-transparent focus:border-white"
+                      : "border-transparent focus:border-black"
                   }`}
                   type="text"
                   name="lastName"
@@ -95,10 +91,10 @@ const FormRegistration = ({ onSubmit }) => {
             {/* Email and Phone */}
             <div className="w-full">
               <input
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.email && formik.errors.email
                     ? "border-red-500"
-                    : "bg-[#302E30] text-white border-transparent focus:border-white"
+                    : "border-transparent focus:border-black"
                 }`}
                 type="email"
                 name="email"
@@ -116,10 +112,10 @@ const FormRegistration = ({ onSubmit }) => {
 
             <div className="w-full">
               <input
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.phone && formik.errors.phone
                     ? "border-red-500"
-                    : "bg-[#302E30] text-white border-transparent focus:border-white"
+                    : "border-transparent focus:border-black"
                 }`}
                 type="tel"
                 name="phone"
@@ -138,10 +134,10 @@ const FormRegistration = ({ onSubmit }) => {
             {/* Gender */}
             <div className="w-full">
               <select
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 text-sm focus:outline-none ${
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.gender && formik.errors.gender
                     ? "border-red-500"
-                    : "bg-[#302E30] text-white border-transparent focus:border-white"
+                    : "border-transparent focus:border-black"
                 }`}
                 name="gender"
                 onChange={formik.handleChange}
@@ -165,10 +161,10 @@ const FormRegistration = ({ onSubmit }) => {
             {/* Address */}
             <div className="w-full">
               <input
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.address && formik.errors.address
                     ? "border-red-500"
-                    : "bg-[#302E30] text-white border-transparent focus:border-white"
+                    : "border-transparent focus:border-black"
                 }`}
                 type="text"
                 name="address"
@@ -184,58 +180,15 @@ const FormRegistration = ({ onSubmit }) => {
               ) : null}
             </div>
 
-            {/* City and State */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="w-full">
-                <input
-                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
-                    formik.touched.city && formik.errors.city
-                      ? "border-red-500"
-                      : "bg-[#302E30] text-white border-transparent focus:border-white"
-                  }`}
-                  type="text"
-                  name="city"
-                  placeholder="Enter your city"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.city}
-                />
-                {formik.touched.city && formik.errors.city ? (
-                  <div className="text-red-500 text-xs mt-1">
-                    {formik.errors.city}
-                  </div>
-                ) : null}
-              </div>
 
-              <div className="w-full">
-                <input
-                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
-                    formik.touched.state && formik.errors.state
-                      ? "border-red-500"
-                      : "bg-[#302E30] text-white border-transparent focus:border-white"
-                  }`}
-                  type="text"
-                  name="state"
-                  placeholder="Enter your state"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.state}
-                />
-                {formik.touched.state && formik.errors.state ? (
-                  <div className="text-red-500 text-xs mt-1">
-                    {formik.errors.state}
-                  </div>
-                ) : null}
-              </div>
-            </div>
 
             {/* Date of Birth */}
             <div className="w-full">
               <input
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none ${
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.dob && formik.errors.dob
                     ? "border-red-500"
-                    : "bg-[#302E30] text-white border-transparent focus:border-white"
+                    : "border-transparent focus:border-black"
                 }`}
                 type="date"
                 name="dob"
@@ -251,12 +204,15 @@ const FormRegistration = ({ onSubmit }) => {
               ) : null}
             </div>
 
+            {/* Submit Button */}
+            <div className="w-full">
             <button
               type="submit"
               className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
             >
               <span className="ml-2 text-sm">Next</span>
             </button>
+            </div>
           </div>
         </div>
       </form>
