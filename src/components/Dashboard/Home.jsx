@@ -168,9 +168,11 @@ function EmployeeList() {
           </div>
         </div>
       </nav>
-      <div className="container mx-auto mt-5 min-h-full p-4 bg-[#282D2D] text-white">
+      <div className="container mx-auto mt-5  p-4 bg-[#282D2D] text-white">
         {loading ? (
-          <div className="text-white">Loading...</div>
+          <div className="flex items-center justify-center h-screen">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
         ) : error ? (
           <div className="text-red-500">{error}</div>
         ) : (
