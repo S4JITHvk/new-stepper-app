@@ -1,8 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-
 
 const departments = [
   "Human Resources",
@@ -28,14 +26,14 @@ const positions = [
   "Finance Analyst"
 ];
 
-const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
+const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues:{ 
-      position:initialValues.position || "",
-      department:initialValues.department ||  "",
-      dateOfJoining:initialValues.dateOfJoining ? new Date(initialValues.dateOfJoining).toISOString().split('T')[0] : "",
-      salaryAmount:initialValues. salaryAmount ||  "",
+    initialValues: {
+      position: initialValues.position || "",
+      department: initialValues.department || "",
+      dateOfJoining: initialValues.dateOfJoining ? new Date(initialValues.dateOfJoining).toISOString().split('T')[0] : "",
+      salaryAmount: initialValues.salaryAmount || "",
     },
     validationSchema: Yup.object({
       position: Yup.string().required("Position is required"),
@@ -50,17 +48,17 @@ const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-[100vh] bg-[#282D2D] px-3">
-
       <form
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-                  <h3 className="text-lg font-extrabold text-white">EMPLOYMENT</h3>
+        <h3 className="text-lg font-extrabold text-white">EMPLOYMENT</h3>
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
-            
+
             {/* Position */}
             <div className="w-full">
+              <label className="block text-sm font-medium text-white">Position</label>
               <select
                 className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.position && formik.errors.position
@@ -86,6 +84,7 @@ const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
 
             {/* Department */}
             <div className="w-full">
+              <label className="block text-sm font-medium text-white">Department</label>
               <select
                 className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.department && formik.errors.department
@@ -111,6 +110,7 @@ const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
 
             {/* Date of Joining */}
             <div className="w-full">
+              <label className="block text-sm font-medium text-white">Date of Joining</label>
               <input
                 className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.dateOfJoining && formik.errors.dateOfJoining
@@ -132,6 +132,7 @@ const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
 
             {/* Salary Amount */}
             <div className="w-full">
+              <label className="block text-sm font-medium text-white">Salary Amount</label>
               <input
                 className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                   formik.touched.salaryAmount && formik.errors.salaryAmount
@@ -151,7 +152,6 @@ const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
                 </div>
               ) : null}
             </div>
-
 
             {/* Submit Button */}
             <div className="w-full flex justify-between">

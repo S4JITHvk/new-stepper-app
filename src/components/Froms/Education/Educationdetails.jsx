@@ -31,8 +31,12 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
       degree: initialValues.degree || "",
       institution: initialValues.institution || "",
       fieldOfStudy: initialValues.fieldOfStudy || "",
-      startDate:  initialValues.startDate ? new Date(initialValues.startDate).toISOString().split('T')[0] : "",
-      endDate:  initialValues.endDate ? new Date(initialValues.endDate).toISOString().split('T')[0] : ""
+      startDate: initialValues.startDate
+        ? new Date(initialValues.startDate).toISOString().split("T")[0]
+        : "",
+      endDate: initialValues.endDate
+        ? new Date(initialValues.endDate).toISOString().split("T")[0]
+        : "",
     },
     validationSchema: Yup.object({
       degree: Yup.string().required("Degree is required"),
@@ -59,14 +63,21 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
               <h3 className="text-lg font-semibold text-white">Education</h3>
 
               {/* Degree */}
-              <div className="w-full">
+              <div className="w-full mt-2">
+                <label
+                  htmlFor="degree"
+                  className="block text-sm font-medium text-white"
+                >
+                  Degree
+                </label>
                 <select
+                  id="degree"
+                  name="degree"
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                     formik.touched.degree && formik.errors.degree
                       ? "border-red-500"
                       : "border-transparent focus:border-black"
                   }`}
-                  name="degree"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.degree}
@@ -87,15 +98,22 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
 
               {/* Institution */}
               <div className="w-full mt-2">
+                <label
+                  htmlFor="institution"
+                  className="block text-sm font-medium text-white"
+                >
+                  Institution
+                </label>
                 <input
+                  id="institution"
+                  name="institution"
+                  type="text"
+                  placeholder="Institution"
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                     formik.touched.institution && formik.errors.institution
                       ? "border-red-500"
                       : "border-transparent focus:border-black"
                   }`}
-                  type="text"
-                  name="institution"
-                  placeholder="Institution"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.institution}
@@ -109,13 +127,20 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
 
               {/* Field of Study */}
               <div className="w-full mt-2">
+                <label
+                  htmlFor="fieldOfStudy"
+                  className="block text-sm font-medium text-white"
+                >
+                  Field of Study
+                </label>
                 <select
+                  id="fieldOfStudy"
+                  name="fieldOfStudy"
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
                     formik.touched.fieldOfStudy && formik.errors.fieldOfStudy
                       ? "border-red-500"
                       : "border-transparent focus:border-black"
                   }`}
-                  name="fieldOfStudy"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.fieldOfStudy}
@@ -135,20 +160,26 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
               </div>
 
               {/* Start Date */}
-              <div className="relative w-full mt-2">
+              <div className="w-full mt-2">
+                <label
+                  htmlFor="startDate"
+                  className="block text-sm font-medium text-white"
+                >
+                  Start Date
+                </label>
                 <input
+                  id="startDate"
+                  name="startDate"
+                  type="date"
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
                     formik.touched.startDate && formik.errors.startDate
                       ? "border-red-500"
                       : "border-transparent focus:border-black"
                   }`}
-                  type="date"
-                  name="startDate"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.startDate}
                 />
-
                 {formik.touched.startDate && formik.errors.startDate ? (
                   <div className="text-red-500 text-xs mt-1">
                     {formik.errors.startDate}
@@ -157,20 +188,26 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
               </div>
 
               {/* End Date */}
-              <div className="relative w-full mt-2">
+              <div className="w-full mt-2">
+                <label
+                  htmlFor="endDate"
+                  className="block text-sm font-medium text-white"
+                >
+                  End Date
+                </label>
                 <input
+                  id="endDate"
+                  name="endDate"
+                  type="date"
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
                     formik.touched.endDate && formik.errors.endDate
                       ? "border-red-500"
                       : "border-transparent focus:border-black"
                   }`}
-                  type="date"
-                  name="endDate"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.endDate}
                 />
-
                 {formik.touched.endDate && formik.errors.endDate ? (
                   <div className="text-red-500 text-xs mt-1">
                     {formik.errors.endDate}
