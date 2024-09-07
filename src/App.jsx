@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -32,7 +32,7 @@ function App() {
             <span className="text-4xl font-medium text-white">Loading...</span>
           </div>
           <h1 className="text-4xl font-bold text-white">Welcome to stepper app</h1>
-          <p className="text-lg text-white">Please fill the form to complete steps..</p>
+          <p className="text-lg text-white">-------------------------------------------------</p>
         </div>
       ) : (
         <Routes>

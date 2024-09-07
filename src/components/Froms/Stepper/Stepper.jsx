@@ -21,7 +21,7 @@ const Stepper = () => {
       setPersonalDetails(state?.employee.personalDetails || {});
       setCompanyDetails(state?.employee.employment || {});
       setEducationDetails(state?.employee.education || {});
-      setEmpid(state?.employee?._id)
+      setEmpid(state?.employee?._id);
     }
   }, [state]);
 
@@ -96,7 +96,9 @@ const Stepper = () => {
             <div className="step">
               {i < activeStep ? <TiTick size={24} /> : i + 1}
             </div>
-            <p className="text-gray-100 font-extrabold">{step}</p>
+            <p className="text-gray-100 font-extrabold text-lg md:text-xl">
+              {step}
+            </p>
           </div>
         ))}
       </div>
