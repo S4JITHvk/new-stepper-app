@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import StepperComponent from './components/Froms/Stepper/Stepper';
-import Dashboard from './components/Dashboard/Home'
-import { Routes, Route ,Navigate} from "react-router-dom"
+import Dashboard from './components/Dashboard/Home';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,8 +36,8 @@ function App() {
         </div>
       ) : (
         <Routes>
-        <Route path="/" element={<Dashboard/>} />
-        <Route path="/form" element={<StepperComponent/>} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/form" element={<StepperComponent />} />
         </Routes>
       )}
     </div>

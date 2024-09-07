@@ -3,18 +3,22 @@ import "./stepper.css";
 import { TiTick } from "react-icons/ti";
 import PersonalDetailsForm from "../personal/Personaldetails";
 import CompanyDetailsForm from "../Company/Companydetails";
+import Educationpage from "../Education/Educationdetails"
 import SummaryPage from "../Info/SummaryPage";
 
 const Stepper = () => {
-  const steps = ["Personal Details", "Company Details", "Summary"];
+  const steps = ["PERSONAL", "EDUCATION", "EMPLOYMENT"];
   const [activeStep, setActiveStep] = useState(0);
   const [personalDetails, setPersonalDetails] = useState({});
   const [companyDetails, setCompanyDetails] = useState({});
-
+  const [educationDetails,seteducationDetails]=useState({})
   const handleFormSubmit = (data) => {
     if (activeStep === 0) {
       setPersonalDetails(data);
     } else if (activeStep === 1) {
+      seteducationDetails(data);
+    }
+    else if (activeStep === 2) {
       setCompanyDetails(data);
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -24,21 +28,20 @@ const Stepper = () => {
     switch (step) {
       case 0:
         return <PersonalDetailsForm onSubmit={handleFormSubmit} />;
-      case 1:
-        return <CompanyDetailsForm onSubmit={handleFormSubmit} />;
-      case 2:
+        case 1:
         return (
-          <SummaryPage
-            personalDetails={personalDetails}
-            companyDetails={companyDetails}
+          <Educationpage
             onSubmit={handleFormSubmit}
           />
         );
+      case 2:
+        return <CompanyDetailsForm onSubmit={handleFormSubmit} />;
       case 3:
         return (
           <SummaryPage
             personalDetails={personalDetails}
             companyDetails={companyDetails}
+            educationDetails={educationDetails}
           />
         );
       default:

@@ -1,8 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { useNavigate } from "react-router-dom";
 const FormRegistration = ({ onSubmit }) => {
+  const navigate=useNavigate()
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -242,7 +243,16 @@ const FormRegistration = ({ onSubmit }) => {
               <span className="ml-2 text-sm">Next</span>
             </button>
             </div>
+            <div className="w-full">
+            <button
+              onClick={()=>navigate('/')}
+              className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+            >
+              <span className="ml-2 text-sm">Back to Dashboard</span>
+            </button>
+            </div>
       </form>
+  
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+
 
 const departments = [
   "Human Resources",
@@ -27,6 +29,7 @@ const positions = [
 ];
 
 const FormRegistration = ({ onSubmit }) => {
+  const navigate=useNavigate()
   const formik = useFormik({
     initialValues: {
       position: "",
@@ -49,11 +52,12 @@ const FormRegistration = ({ onSubmit }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-[100vh] bg-[#282D2D] px-3">
+
       <form
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-
+                  <h3 className="text-lg font-extrabold text-white">EMPLOYMENT</h3>
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
             
@@ -163,10 +167,10 @@ const FormRegistration = ({ onSubmit }) => {
                 onBlur={formik.handleBlur}
                 value={formik.values.salaryCurrency}
               >
+                <option value="INR">INR</option>
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
-                <option value="INR">INR</option>
                 {/* Add other currencies as needed */}
               </select>
               {formik.touched.salaryCurrency && formik.errors.salaryCurrency ? (
@@ -182,8 +186,16 @@ const FormRegistration = ({ onSubmit }) => {
                 type="submit"
                 className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
               >
-                <span className="ml-2 text-sm">Submit</span>
+                <span className="ml-2 text-sm">Next</span>
               </button>
+            </div>
+            <div className="w-full">
+            <button
+              onClick={()=>navigate('/')}
+              className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+            >
+              <span className="ml-2 text-sm">Back to Dashboard</span>
+            </button>
             </div>
           </div>
         </div>
