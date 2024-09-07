@@ -1,19 +1,20 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-const FormRegistration = ({ onSubmit }) => {
+const FormRegistration = ({ onSubmit,initialValues }) => {
   const navigate=useNavigate()
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      gender: "",
-      maritalStatus: "",
-      address: "",
-      dateOfBirth: "",
+      firstName: initialValues.firstName || "",
+      lastName: initialValues.lastName || "",
+      email: initialValues.email || "",
+      phone: initialValues.phone || "",
+      gender: initialValues.gender || "",
+      maritalStatus: initialValues.maritalStatus || "",
+      address: initialValues.address || "",
+      dateOfBirth: initialValues.dateOfBirth ? new Date(initialValues.dateOfBirth).toISOString().split('T')[0] : "",
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("First name is required"),
@@ -33,17 +34,13 @@ const FormRegistration = ({ onSubmit }) => {
       onSubmit(values);
     },
   });
-
+  
   return (
     <div className="flex flex-col justify-center items-center w-full h-[100vh] bg-[#282D2D] px-3">
       <form
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-        {/* <h1 className="text-center text-lg font-extrabold text-white">
-          EMPLOYEE DETAILS
-        </h1> */}
-
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
             {/* First Name and Last Name */}

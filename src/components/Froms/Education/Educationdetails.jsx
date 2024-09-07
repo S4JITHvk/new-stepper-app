@@ -1,14 +1,14 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+
 const degreeOptions = [
   "Bachelor's Degree",
   "Master's Degree",
   "PhD",
   "Associate's Degree",
   "Diploma",
-  "Certificate"
+  "Certificate",
 ];
 
 const fieldOfStudyOptions = [
@@ -21,33 +21,25 @@ const fieldOfStudyOptions = [
   "Chemistry",
   "Economics",
   "Psychology",
-  "Other"
+  "Other",
 ];
 
-const FormRegistration = ({ onSubmit }) => {
-    const navigate=useNavigate()
+const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      education: [
-        {
-          degree: "",
-          institution: "",
-          fieldOfStudy: "",
-          startDate: "",
-          endDate: ""
-        }
-      ]
+      degree: initialValues.degree || "",
+      institution: initialValues.institution || "",
+      fieldOfStudy: initialValues.fieldOfStudy || "",
+      startDate:  initialValues.startDate ? new Date(initialValues.startDate).toISOString().split('T')[0] : "",
+      endDate:  initialValues.endDate ? new Date(initialValues.endDate).toISOString().split('T')[0] : ""
     },
     validationSchema: Yup.object({
-      education: Yup.array().of(
-        Yup.object({
-          degree: Yup.string().required("Degree is required"),
-          institution: Yup.string().required("Institution is required"),
-          fieldOfStudy: Yup.string().required("Field of study is required"),
-          startDate: Yup.date().required("Start date is required").nullable(),
-          endDate: Yup.date().required("End date is required").nullable()
-        })
-      )
+      degree: Yup.string().required("Degree is required"),
+      institution: Yup.string().required("Institution is required"),
+      fieldOfStudy: Yup.string().required("Field of study is required"),
+      startDate: Yup.date().required("Start date is required").nullable(),
+      endDate: Yup.date().required("End date is required").nullable(),
     }),
     onSubmit: (values) => {
       onSubmit(values);
@@ -62,158 +54,147 @@ const FormRegistration = ({ onSubmit }) => {
       >
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
-            
             {/* Education */}
             <div className="w-full">
               <h3 className="text-lg font-semibold text-white">Education</h3>
-              {formik.values.education.map((edu, index) => (
-                <div key={index} className="border-b border-gray-700 pb-4 mb-4">
-                  
-                  {/* Degree */}
-                  <div className="w-full">
-                    <select
-                      className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
-                        formik.touched.education?.[index]?.degree &&
-                        formik.errors.education?.[index]?.degree
-                          ? "border-red-500"
-                          : "border-transparent focus:border-black"
-                      }`}
-                      name={`education.${index}.degree`}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={edu.degree}
-                    >
-                      <option value="" label="Select Degree" />
-                      {degreeOptions.map((option, i) => (
-                        <option key={i} value={option}>{option}</option>
-                      ))}
-                    </select>
-                    {formik.touched.education?.[index]?.degree &&
-                    formik.errors.education?.[index]?.degree ? (
-                      <div className="text-red-500 text-xs mt-1">
-                        {formik.errors.education[index]?.degree}
-                      </div>
-                    ) : null}
-                  </div>
 
-                  {/* Institution */}
-                  <div className="w-full mt-2">
-                    <input
-                      className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
-                        formik.touched.education?.[index]?.institution &&
-                        formik.errors.education?.[index]?.institution
-                          ? "border-red-500"
-                          : "border-transparent focus:border-black"
-                      }`}
-                      type="text"
-                      name={`education.${index}.institution`}
-                      placeholder="Institution"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={edu.institution}
-                    />
-                    {formik.touched.education?.[index]?.institution &&
-                    formik.errors.education?.[index]?.institution ? (
-                      <div className="text-red-500 text-xs mt-1">
-                        {formik.errors.education[index]?.institution}
-                      </div>
-                    ) : null}
+              {/* Degree */}
+              <div className="w-full">
+                <select
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
+                    formik.touched.degree && formik.errors.degree
+                      ? "border-red-500"
+                      : "border-transparent focus:border-black"
+                  }`}
+                  name="degree"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.degree}
+                >
+                  <option value="" label="Select Degree" />
+                  {degreeOptions.map((option, i) => (
+                    <option key={i} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                {formik.touched.degree && formik.errors.degree ? (
+                  <div className="text-red-500 text-xs mt-1">
+                    {formik.errors.degree}
                   </div>
+                ) : null}
+              </div>
 
-                  {/* Field of Study */}
-                  <div className="w-full mt-2">
-                    <select
-                      className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
-                        formik.touched.education?.[index]?.fieldOfStudy &&
-                        formik.errors.education?.[index]?.fieldOfStudy
-                          ? "border-red-500"
-                          : "border-transparent focus:border-black"
-                      }`}
-                      name={`education.${index}.fieldOfStudy`}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={edu.fieldOfStudy}
-                    >
-                      <option value="" label="Select Field of Study" />
-                      {fieldOfStudyOptions.map((option, i) => (
-                        <option key={i} value={option}>{option}</option>
-                      ))}
-                    </select>
-                    {formik.touched.education?.[index]?.fieldOfStudy &&
-                    formik.errors.education?.[index]?.fieldOfStudy ? (
-                      <div className="text-red-500 text-xs mt-1">
-                        {formik.errors.education[index]?.fieldOfStudy}
-                      </div>
-                    ) : null}
+              {/* Institution */}
+              <div className="w-full mt-2">
+                <input
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
+                    formik.touched.institution && formik.errors.institution
+                      ? "border-red-500"
+                      : "border-transparent focus:border-black"
+                  }`}
+                  type="text"
+                  name="institution"
+                  placeholder="Institution"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.institution}
+                />
+                {formik.touched.institution && formik.errors.institution ? (
+                  <div className="text-red-500 text-xs mt-1">
+                    {formik.errors.institution}
                   </div>
+                ) : null}
+              </div>
 
-                  {/* Start Date */}
-                  <div className="relative w-full mt-2">
-                    <input
-                      className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
-                        formik.touched.education?.[index]?.startDate &&
-                        formik.errors.education?.[index]?.startDate
-                          ? "border-red-500"
-                          : "border-transparent focus:border-black"
-                      }`}
-                      type="date"
-                      name={`education.${index}.startDate`}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={edu.startDate}
-                    />
-
-                    {formik.touched.education?.[index]?.startDate &&
-                    formik.errors.education?.[index]?.startDate ? (
-                      <div className="text-red-500 text-xs mt-1">
-                        {formik.errors.education[index]?.startDate}
-                      </div>
-                    ) : null}
+              {/* Field of Study */}
+              <div className="w-full mt-2">
+                <select
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
+                    formik.touched.fieldOfStudy && formik.errors.fieldOfStudy
+                      ? "border-red-500"
+                      : "border-transparent focus:border-black"
+                  }`}
+                  name="fieldOfStudy"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.fieldOfStudy}
+                >
+                  <option value="" label="Select Field of Study" />
+                  {fieldOfStudyOptions.map((option, i) => (
+                    <option key={i} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                {formik.touched.fieldOfStudy && formik.errors.fieldOfStudy ? (
+                  <div className="text-red-500 text-xs mt-1">
+                    {formik.errors.fieldOfStudy}
                   </div>
+                ) : null}
+              </div>
 
-                  {/* End Date */}
-                  <div className="relative w-full mt-2">
-                    <input
-                      className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
-                        formik.touched.education?.[index]?.endDate &&
-                        formik.errors.education?.[index]?.endDate
-                          ? "border-red-500"
-                          : "border-transparent focus:border-black"
-                      }`}
-                      type="date"
-                      name={`education.${index}.endDate`}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={edu.endDate}
-                    />
-                
-                    {formik.touched.education?.[index]?.endDate &&
-                    formik.errors.education?.[index]?.endDate ? (
-                      <div className="text-red-500 text-xs mt-1">
-                        {formik.errors.education[index]?.endDate}
-                      </div>
-                    ) : null}
+              {/* Start Date */}
+              <div className="relative w-full mt-2">
+                <input
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
+                    formik.touched.startDate && formik.errors.startDate
+                      ? "border-red-500"
+                      : "border-transparent focus:border-black"
+                  }`}
+                  type="date"
+                  name="startDate"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.startDate}
+                />
+
+                {formik.touched.startDate && formik.errors.startDate ? (
+                  <div className="text-red-500 text-xs mt-1">
+                    {formik.errors.startDate}
                   </div>
-                </div>
-              ))}
+                ) : null}
+              </div>
+
+              {/* End Date */}
+              <div className="relative w-full mt-2">
+                <input
+                  className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
+                    formik.touched.endDate && formik.errors.endDate
+                      ? "border-red-500"
+                      : "border-transparent focus:border-black"
+                  }`}
+                  type="date"
+                  name="endDate"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.endDate}
+                />
+
+                {formik.touched.endDate && formik.errors.endDate ? (
+                  <div className="text-red-500 text-xs mt-1">
+                    {formik.errors.endDate}
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             {/* Submit Button */}
-            <div className="w-full">
+            <div className="w-full flex justify-between">
+              <button
+                type="button"
+                onClick={onBack}
+                className="mt-4 tracking-wide font-semibold bg-gray-600 text-gray-100 w-1/2 py-3 rounded-lg hover:bg-gray-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none mr-2"
+              >
+                <span className="ml-2 text-sm">Back</span>
+              </button>
+
               <button
                 type="submit"
-                className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-1/2 py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none ml-2"
               >
                 <span className="ml-2 text-sm">Next</span>
               </button>
-            </div>
-            <div className="w-full">
-            <button
-              onClick={()=>navigate('/')}
-              className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-            >
-              <span className="ml-2 text-sm">Back to Dashboard</span>
-            </button>
             </div>
           </div>
         </div>

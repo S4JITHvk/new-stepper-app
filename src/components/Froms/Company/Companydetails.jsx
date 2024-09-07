@@ -28,22 +28,20 @@ const positions = [
   "Finance Analyst"
 ];
 
-const FormRegistration = ({ onSubmit }) => {
-  const navigate=useNavigate()
+const FormRegistration = ({ onSubmit ,initialValues,onBack}) => {
   const formik = useFormik({
-    initialValues: {
-      position: "",
-      department: "",
-      dateOfJoining: "",
-      salaryAmount: "",
-      salaryCurrency: "INR",
+    enableReinitialize: true,
+    initialValues:{ 
+      position:initialValues.position || "",
+      department:initialValues.department ||  "",
+      dateOfJoining:initialValues.dateOfJoining ? new Date(initialValues.dateOfJoining).toISOString().split('T')[0] : "",
+      salaryAmount:initialValues. salaryAmount ||  "",
     },
     validationSchema: Yup.object({
       position: Yup.string().required("Position is required"),
       department: Yup.string().required("Department is required"),
       dateOfJoining: Yup.date().required("Date of joining is required").nullable(),
       salaryAmount: Yup.number().typeError("Salary amount must be a number").required("Salary amount is required"),
-      salaryCurrency: Yup.string().required("Salary currency is required"),
     }),
     onSubmit: (values) => {
       onSubmit(values);
@@ -154,49 +152,25 @@ const FormRegistration = ({ onSubmit }) => {
               ) : null}
             </div>
 
-            {/* Salary Currency */}
-            <div className="w-full">
-              <select
-                className={`w-full px-4 py-2 rounded-lg font-medium border-2 text-sm focus:outline-none bg-white text-black ${
-                  formik.touched.salaryCurrency && formik.errors.salaryCurrency
-                    ? "border-red-500"
-                    : "border-transparent focus:border-black"
-                }`}
-                name="salaryCurrency"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.salaryCurrency}
-              >
-                <option value="INR">INR</option>
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-                {/* Add other currencies as needed */}
-              </select>
-              {formik.touched.salaryCurrency && formik.errors.salaryCurrency ? (
-                <div className="text-red-500 text-xs mt-1">
-                  {formik.errors.salaryCurrency}
-                </div>
-              ) : null}
-            </div>
 
             {/* Submit Button */}
-            <div className="w-full">
+            <div className="w-full flex justify-between">
+              <button
+                type="button"
+                onClick={onBack}
+                className="mt-4 tracking-wide font-semibold bg-gray-600 text-gray-100 w-1/2 py-3 rounded-lg hover:bg-gray-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none mr-2"
+              >
+                <span className="ml-2 text-sm">Back</span>
+              </button>
+
               <button
                 type="submit"
-                className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-1/2 py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none ml-2"
               >
                 <span className="ml-2 text-sm">Next</span>
               </button>
             </div>
-            <div className="w-full">
-            <button
-              onClick={()=>navigate('/')}
-              className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-            >
-              <span className="ml-2 text-sm">Back to Dashboard</span>
-            </button>
-            </div>
+            
           </div>
         </div>
       </form>

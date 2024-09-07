@@ -2,10 +2,25 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import Api from '../../../Api/stepperApi';
 import { useNavigate } from 'react-router-dom';
-export default function SummaryPage({ personalDetails, companyDetails, educationDetails }) {
+export default function SummaryPage({ personalDetails, companyDetails, educationDetails,onBack,empid }) {
  const navigate=useNavigate()
   const handleFinish = async () => {
     try {
+      if(empid){
+        const employeeData = {
+          empid,
+          personalDetails,
+          companyDetails,
+          educationDetails,
+        }
+        const response= await Api.post("/editEmployee", employeeData);
+        if(response.status===200){
+         toast.success("Successfully Updated Employee");
+         navigate('/');
+        }else if(response.status===400){
+         toast.error(response.data.message)
+        }
+    }else{
       const employeeData = {
         personalDetails,
         companyDetails,
@@ -15,9 +30,12 @@ export default function SummaryPage({ personalDetails, companyDetails, education
      if(response.status===201){
       toast.success("Successfully Added Employee");
       navigate('/');
+     }else if(response.status===400){
+      toast.error(response.data.message)
      }
+    }
     } catch (error) {
-      toast.error("Error adding employee. Please try again.");
+      toast.error(error.response.data.message);
       console.error("Error adding employee:", error);
     }
   };
@@ -59,29 +77,23 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             EDUCATION DETAILS
           </h3>
-          {educationDetails.education.length > 0 ? (
-            educationDetails.education.map((edu, index) => (
-              <div key={index} className="mb-4">
+              <div className="mb-4">
                 <p className="text-gray-200 mb-1 sm:mb-2">
-                  <span className="font-semibold">Degree:</span> {edu.degree}
+                  <span className="font-semibold">Degree:</span> {educationDetails.degree}
                 </p>
                 <p className="text-gray-200 mb-1 sm:mb-2">
-                  <span className="font-semibold">Institution:</span> {edu.institution}
+                  <span className="font-semibold">Institution:</span> {educationDetails.institution}
                 </p>
                 <p className="text-gray-200 mb-1 sm:mb-2">
-                  <span className="font-semibold">Field of Study:</span> {edu.fieldOfStudy}
+                  <span className="font-semibold">Field of Study:</span> {educationDetails.fieldOfStudy}
                 </p>
                 <p className="text-gray-200 mb-1 sm:mb-2">
-                  <span className="font-semibold">Start Date:</span> {edu.startDate}
+                  <span className="font-semibold">Start Date:</span> {educationDetails.startDate}
                 </p>
                 <p className="text-gray-200">
-                  <span className="font-semibold">End Date:</span> {edu.endDate}
+                  <span className="font-semibold">End Date:</span> {educationDetails.endDate}
                 </p>
               </div>
-            ))
-          ) : (
-            <p className="text-gray-200">No education details available.</p>
-          )}
         </div>
 
         {/* Employment Details Section */}
@@ -105,14 +117,22 @@ export default function SummaryPage({ personalDetails, companyDetails, education
       </div>
 
       {/* Finish Button */}
-      <div className="w-full max-w-5xl">
-        <button
-          onClick={handleFinish}
-          className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-        >
-          <span className="ml-2 text-sm">ADD EMPLOYEE</span>
-        </button>
-      </div>
+      <div className="w-full flex justify-between">
+              <button
+                type="button"
+                onClick={onBack}
+                className="mt-4 tracking-wide font-semibold bg-gray-600 text-gray-100 w-1/2 py-3 rounded-lg hover:bg-gray-500 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none mr-2"
+              >
+                <span className="ml-2 text-sm">Back</span>
+              </button>
+
+              <button
+               onClick={handleFinish}
+                className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-1/2 py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none ml-2"
+              >
+                <span className="ml-2 text-sm">Submit</span>
+              </button>
+            </div>
     </div>
   );
 }

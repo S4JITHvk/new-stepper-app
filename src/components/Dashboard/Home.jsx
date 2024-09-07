@@ -311,7 +311,9 @@ function EmployeeList() {
 
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <button
-                            onClick={() => navigate(`/edit/${employee._id}`)}
+                            onClick={() =>
+                              navigate(`/form`, { state: { employee } })
+                            }
                             className="text-blue-500 hover:text-blue-700 mr-4"
                           >
                             <FontAwesomeIcon icon={faEdit} />
