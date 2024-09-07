@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import StepperComponent from './components/Stepper/Stepper';
-
+import StepperComponent from './components/Froms/Stepper/Stepper';
+import Dashboard from './components/Dashboard/Home'
+import { Routes, Route ,Navigate} from "react-router-dom"
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="w-full h-full bg-[#282D2D]">
+    <div className="w-full h-screen bg-[#282D2D]">
       {isLoading ? (
         <div className="w-full h-screen bg-black flex flex-col justify-center items-center space-y-4">
           <div aria-label="Loading..." role="status" className="flex items-center space-x-2">
@@ -33,7 +34,10 @@ function App() {
           <p className="text-lg text-white">Please fill the form to complete steps..</p>
         </div>
       ) : (
-        <StepperComponent />
+        <Routes>
+        <Route path="/" element={<Dashboard/>} />
+        <Route path="/form" element={<StepperComponent/>} />
+        </Routes>
       )}
     </div>
   );

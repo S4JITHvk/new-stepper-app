@@ -10,8 +10,9 @@ const FormRegistration = ({ onSubmit }) => {
       email: "",
       phone: "",
       gender: "",
+      maritalStatus: "",
       address: "",
-      dob: "",
+      dateOfBirth: "",
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("First name is required"),
@@ -23,8 +24,9 @@ const FormRegistration = ({ onSubmit }) => {
         .matches(/^[0-9]+$/, "Phone number is not valid")
         .required("Phone number is required"),
       gender: Yup.string().required("Gender is required"),
+      maritalStatus: Yup.string().required("Marital status is required"),
       address: Yup.string().required("Address is required"),
-      dob: Yup.date().required("Date of birth is required").nullable(),
+      dateOfBirth: Yup.date().required("Date of birth is required").nullable(),
     }),
     onSubmit: (values) => {
       onSubmit(values);
@@ -37,9 +39,9 @@ const FormRegistration = ({ onSubmit }) => {
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-        <h1 className="text-center text-lg font-extrabold text-white">
-          PERSONAL DETAILS
-        </h1>
+        {/* <h1 className="text-center text-lg font-extrabold text-white">
+          EMPLOYEE DETAILS
+        </h1> */}
 
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
@@ -54,7 +56,7 @@ const FormRegistration = ({ onSubmit }) => {
                   }`}
                   type="text"
                   name="firstName"
-                  placeholder="Your first name"
+                  placeholder="Employee first name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.firstName}
@@ -75,7 +77,7 @@ const FormRegistration = ({ onSubmit }) => {
                   }`}
                   type="text"
                   name="lastName"
-                  placeholder="Your last name"
+                  placeholder="Employee last name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.lastName}
@@ -98,7 +100,7 @@ const FormRegistration = ({ onSubmit }) => {
                 }`}
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="Employee email"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
@@ -119,7 +121,7 @@ const FormRegistration = ({ onSubmit }) => {
                 }`}
                 type="tel"
                 name="phone"
-                placeholder="Enter your phone"
+                placeholder="Employee phone"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.phone}
@@ -145,7 +147,7 @@ const FormRegistration = ({ onSubmit }) => {
                 value={formik.values.gender}
               >
                 <option value="" disabled>
-                  Select your gender
+                Employee gender
                 </option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -154,6 +156,34 @@ const FormRegistration = ({ onSubmit }) => {
               {formik.touched.gender && formik.errors.gender ? (
                 <div className="text-red-500 text-xs mt-1">
                   {formik.errors.gender}
+                </div>
+              ) : null}
+            </div>
+
+            {/* Marital Status */}
+            <div className="w-full">
+              <select
+                className={`w-full px-4 py-2 rounded-lg font-medium border-2 text-sm focus:outline-none bg-white text-black ${
+                  formik.touched.maritalStatus && formik.errors.maritalStatus
+                    ? "border-red-500"
+                    : "border-transparent focus:border-black"
+                }`}
+                name="maritalStatus"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.maritalStatus}
+              >
+                <option value="" disabled>
+                  Employee marital status
+                </option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Widowed">Widowed</option>
+              </select>
+              {formik.touched.maritalStatus && formik.errors.maritalStatus ? (
+                <div className="text-red-500 text-xs mt-1">
+                  {formik.errors.maritalStatus}
                 </div>
               ) : null}
             </div>
@@ -168,7 +198,7 @@ const FormRegistration = ({ onSubmit }) => {
                 }`}
                 type="text"
                 name="address"
-                placeholder="Enter your address"
+                placeholder="Employee address"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.address}
@@ -180,32 +210,31 @@ const FormRegistration = ({ onSubmit }) => {
               ) : null}
             </div>
 
-
-
             {/* Date of Birth */}
             <div className="w-full">
               <input
                 className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-gray-500 text-sm focus:outline-none bg-white text-black ${
-                  formik.touched.dob && formik.errors.dob
+                  formik.touched.dateOfBirth && formik.errors.dateOfBirth
                     ? "border-red-500"
                     : "border-transparent focus:border-black"
                 }`}
                 type="date"
-                name="dob"
-                placeholder="Select your date of birth"
+                name="dateOfBirth"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.dob}
+                value={formik.values.dateOfBirth}
               />
-              {formik.touched.dob && formik.errors.dob ? (
+              {formik.touched.dateOfBirth && formik.errors.dateOfBirth ? (
                 <div className="text-red-500 text-xs mt-1">
-                  {formik.errors.dob}
+                  {formik.errors.dateOfBirth}
                 </div>
               ) : null}
             </div>
+          </div>
+        </div>
 
-            {/* Submit Button */}
-            <div className="w-full">
+        {/* Submit Button */}
+        <div className="w-full">
             <button
               type="submit"
               className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-full py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
@@ -213,8 +242,6 @@ const FormRegistration = ({ onSubmit }) => {
               <span className="ml-2 text-sm">Next</span>
             </button>
             </div>
-          </div>
-        </div>
       </form>
     </div>
   );

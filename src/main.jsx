@@ -1,14 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from "react-hot-toast";
 import App from "./App";
 import "./index.css";
 
 ReactDOM.render(
-  <BrowserRouter>
-  <Toaster/>
-    <App />
-  </BrowserRouter>,
+  <React.StrictMode>
+    <Router>
+      <Toaster />
+      <Routes>
+        <Route path="*" element={<App />} />
+      </Routes>
+    </Router>
+  </React.StrictMode>,
   document.getElementById("root")
 );
