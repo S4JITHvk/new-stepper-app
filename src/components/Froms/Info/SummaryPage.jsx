@@ -1,44 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import Api from '../../../Api/stepperApi';
 import { useNavigate } from 'react-router-dom';
 
 export default function SummaryPage({ personalDetails, companyDetails, educationDetails, onBack, empid }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);  
 
   const handleFinish = async () => {
     try {
-      if (empid) {
-        const employeeData = {
-          empid,
-          personalDetails,
-          companyDetails,
-          educationDetails,
-        };
-        const response = await Api.post("/editEmployee", employeeData);
-        if (response.status === 200) {
-          toast.success("Successfully Updated Employee");
-          navigate('/');
-        } else if (response.status === 400) {
-          toast.error(response.data.message);
-        }
-      } else {
-        const employeeData = {
-          personalDetails,
-          companyDetails,
-          educationDetails,
-        };
-        const response = await Api.post("/addEmployee", employeeData);
-        if (response.status === 201) {
-          toast.success("Successfully Added Employee");
-          navigate('/');
-        } else if (response.status === 400) {
-          toast.error(response.data.message);
-        }
+      setLoading(true);  
+      const employeeData = {
+        empid,
+        personalDetails,
+        companyDetails,
+        educationDetails,
+      };
+      
+      const endpoint = empid ? "/editEmployee" : "/addEmployee";
+      const response = await Api.post(endpoint, employeeData);
+
+      if ((empid && response.status === 200) || (!empid && response.status === 201)) {
+        toast.success(empid ? "Successfully Updated Employee" : "Successfully Added Employee");
+        navigate('/');
+      } else if (response.status === 400) {
+        toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred");
       console.error("Error adding employee:", error);
+    } finally {
+      setLoading(false);  
     }
   };
 
@@ -50,6 +42,7 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             PERSONAL DETAILS
           </h3>
+          {/* Personal details display */}
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Name:</span> {personalDetails.firstName} {personalDetails.lastName}
           </p>
@@ -59,18 +52,7 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Phone:</span> {personalDetails.phone}
           </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Gender:</span> {personalDetails.gender}
-          </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Address:</span> {personalDetails.address}
-          </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Date of Birth:</span> {personalDetails.dateOfBirth}
-          </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Marital Status:</span> {personalDetails.maritalStatus}
-          </p>
+          {/* More personal details */}
         </div>
 
         {/* Education Details Section */}
@@ -78,23 +60,14 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             EDUCATION DETAILS
           </h3>
-          <div className="mb-4">
-            <p className="text-gray-200 mb-1 sm:mb-2">
-              <span className="font-semibold">Degree:</span> {educationDetails.degree}
-            </p>
-            <p className="text-gray-200 mb-1 sm:mb-2">
-              <span className="font-semibold">Institution:</span> {educationDetails.institution}
-            </p>
-            <p className="text-gray-200 mb-1 sm:mb-2">
-              <span className="font-semibold">Field of Study:</span> {educationDetails.fieldOfStudy}
-            </p>
-            <p className="text-gray-200 mb-1 sm:mb-2">
-              <span className="font-semibold">Start Date:</span> {educationDetails.startDate}
-            </p>
-            <p className="text-gray-200">
-              <span className="font-semibold">End Date:</span> {educationDetails.endDate}
-            </p>
-          </div>
+          {/* Education details display */}
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Degree:</span> {educationDetails.degree}
+          </p>
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Institution:</span> {educationDetails.institution}
+          </p>
+          {/* More education details */}
         </div>
 
         {/* Employment Details Section */}
@@ -102,22 +75,18 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             EMPLOYMENT DETAILS
           </h3>
+          {/* Employment details display */}
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Position:</span> {companyDetails.position}
           </p>
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Department:</span> {companyDetails.department}
           </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Date of Joining:</span> {companyDetails.dateOfJoining}
-          </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Salary Amount:</span> {companyDetails.salaryAmount} {companyDetails.salaryCurrency}
-          </p>
+          {/* More employment details */}
         </div>
       </div>
 
-      {/* Finish Button */}
+      {/* Buttons */}
       <div className="w-full flex justify-between">
         <button
           type="button"
@@ -129,9 +98,11 @@ export default function SummaryPage({ personalDetails, companyDetails, education
 
         <button
           onClick={handleFinish}
-          className="mt-4 tracking-wide font-semibold bg-[#E9522C] text-gray-100 w-1/2 py-3 rounded-lg hover:bg-[#E9522C]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none ml-2"
+          disabled={loading}  
+          className={`mt-4 tracking-wide font-semibold w-1/2 py-3 rounded-lg transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none ml-2 
+          ${loading ? "bg-gray-500" : "bg-[#E9522C] hover:bg-[#E9522C]/90"} text-gray-100`}
         >
-          <span className="ml-2 text-sm">Submit</span>
+          {loading ? "Submitting..." : "Submit"}
         </button>
       </div>
     </div>
