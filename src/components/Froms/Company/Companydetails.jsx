@@ -52,7 +52,6 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
         onSubmit={formik.handleSubmit}
         className="xl:max-w-md bg-black w-full p-4 rounded-md"
       >
-        <h3 className="text-lg font-extrabold text-white">EMPLOYMENT</h3>
         <div className="w-full mt-6">
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
 

@@ -43,7 +43,10 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
       institution: Yup.string().required("Institution is required"),
       fieldOfStudy: Yup.string().required("Field of study is required"),
       startDate: Yup.date().required("Start date is required").nullable(),
-      endDate: Yup.date().required("End date is required").nullable(),
+      endDate: Yup.date()
+        .min(Yup.ref('startDate'), "End date can't be before start date")
+        .required("End date is required")
+        .nullable(),
     }),
     onSubmit: (values) => {
       onSubmit(values);
@@ -60,8 +63,6 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
           <div className="mx-auto max-w-xs sm:max-w-sm md:max-w-md flex flex-col gap-3">
             {/* Education */}
             <div className="w-full">
-              <h3 className="text-lg font-semibold text-white">Education</h3>
-
               {/* Degree */}
               <div className="w-full mt-2">
                 <label
@@ -199,6 +200,7 @@ const FormRegistration = ({ onSubmit, initialValues, onBack }) => {
                   id="endDate"
                   name="endDate"
                   type="date"
+                  min={formik.values.startDate|| ""}
                   className={`w-full px-4 py-2 rounded-lg font-medium border-2 placeholder-transparent text-sm focus:outline-none bg-white text-black ${
                     formik.touched.endDate && formik.errors.endDate
                       ? "border-red-500"

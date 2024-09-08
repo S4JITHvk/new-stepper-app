@@ -25,9 +25,9 @@ const FormRegistration = ({ onSubmit, initialValues }) => {
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      phone: Yup.string()
-        .matches(/^[0-9]+$/, "Phone number is not valid")
-        .required("Phone number is required"),
+        phone: Yup.string()
+        .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+        .required("Phone number is required"),      
       gender: Yup.string().required("Gender is required"),
       maritalStatus: Yup.string().required("Marital status is required"),
       address: Yup.string().required("Address is required"),

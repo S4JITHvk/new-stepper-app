@@ -160,7 +160,7 @@ function EmployeeList() {
           <div className="flex items-center">
             <button
               onClick={() => navigate("/form")}
-              className="bg-orange-500 text-white px-3 font-extrabold py-1 rounded mr-4"
+              className="bg-orange-500 text-white px-3 font-semibold py-1 rounded mr-4"
             >
               <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
               Add Employee
