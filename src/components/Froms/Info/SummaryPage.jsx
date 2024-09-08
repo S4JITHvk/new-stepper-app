@@ -42,7 +42,6 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             PERSONAL DETAILS
           </h3>
-          {/* Personal details display */}
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Name:</span> {personalDetails.firstName} {personalDetails.lastName}
           </p>
@@ -52,7 +51,18 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Phone:</span> {personalDetails.phone}
           </p>
-          {/* More personal details */}
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Gender:</span> {personalDetails.gender}
+          </p>
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Address:</span> {personalDetails.address}
+          </p>
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Date of Birth:</span> {personalDetails.dateOfBirth}
+          </p>
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Marital Status:</span> {personalDetails.maritalStatus}
+          </p>
         </div>
 
         {/* Education Details Section */}
@@ -60,31 +70,46 @@ export default function SummaryPage({ personalDetails, companyDetails, education
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             EDUCATION DETAILS
           </h3>
-          {/* Education details display */}
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Degree:</span> {educationDetails.degree}
-          </p>
-          <p className="text-gray-200 mb-1 sm:mb-2">
-            <span className="font-semibold">Institution:</span> {educationDetails.institution}
-          </p>
-          {/* More education details */}
+          <div className="mb-4">
+            <p className="text-gray-200 mb-1 sm:mb-2">
+              <span className="font-semibold">Degree:</span> {educationDetails.degree}
+            </p>
+            <p className="text-gray-200 mb-1 sm:mb-2">
+              <span className="font-semibold">Institution:</span> {educationDetails.institution}
+            </p>
+            <p className="text-gray-200 mb-1 sm:mb-2">
+              <span className="font-semibold">Field of Study:</span> {educationDetails.fieldOfStudy}
+            </p>
+            <p className="text-gray-200 mb-1 sm:mb-2">
+              <span className="font-semibold">Start Date:</span> {educationDetails.startDate}
+            </p>
+            <p className="text-gray-200">
+              <span className="font-semibold">End Date:</span> {educationDetails.endDate}
+            </p>
+          </div>
         </div>
+
 
         {/* Employment Details Section */}
         <div className="w-full sm:w-1/3 bg-[#1C1C1C] p-4 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl">
           <h3 className="text-xl font-extrabold mb-3 sm:text-2xl text-[#E9522C]">
             EMPLOYMENT DETAILS
           </h3>
-          {/* Employment details display */}
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Position:</span> {companyDetails.position}
           </p>
           <p className="text-gray-200 mb-1 sm:mb-2">
             <span className="font-semibold">Department:</span> {companyDetails.department}
           </p>
-          {/* More employment details */}
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Date of Joining:</span> {companyDetails.dateOfJoining}
+          </p>
+          <p className="text-gray-200 mb-1 sm:mb-2">
+            <span className="font-semibold">Salary Amount:</span> {companyDetails.salaryAmount} {companyDetails.salaryCurrency}
+          </p>
         </div>
       </div>
+
 
       {/* Buttons */}
       <div className="w-full flex justify-between">
