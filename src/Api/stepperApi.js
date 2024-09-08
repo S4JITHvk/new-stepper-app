@@ -1,5 +1,5 @@
 import axios from "axios"
-const Hostname="http://localhost:5000"
+const Hostname="https://stepper-backend-5.onrender.com"
 const baseURL =Hostname+'/api'
 
 const Stepperapi = axios.create({
